@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-adonis
+  labels:
+    app: hello-adonis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-adonis
+  template:
+    metadata:
+      labels:
+        app: hello-adonis
+    spec:
+      containers:
+      - name: hello-adonis
+        image: skilldna-ml1:5000/hello-adonis:latest
+        ports:
+        - containerPort: 80
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: walid-service9
+spec:
+  type:  NodePort
+  selector:
+    app: hello-adonis
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80 
+    targetPort: 80

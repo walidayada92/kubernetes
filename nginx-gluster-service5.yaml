@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-walid5
+  labels:
+    app: walid5
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: walid5
+  template:
+    metadata:
+      labels:
+        app: walid5
+    spec:
+            #      hostNetwork: true
+      containers:
+      - name: nginx
+        image: nginx:1.14.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: glusterfsvol
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: glusterfsvol
+        glusterfs:
+              endpoints: glusterfs-cluster
+              path: vol01/walid5
+              readOnly: false
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: walid-service5
+spec:
+  type:  LoadBalancer
+  loadBalancerIP: 10.109.204.198
+  selector:
+    app: walid5
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80 
+    targetPort: 80
+  externalIPs:
+     - 158.176.87.235

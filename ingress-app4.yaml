@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-walid4
+  annotations:
+          ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: app4.walidtest.com
+    http:
+      paths: 
+      - path: 
+        backend:
+            serviceName: walid-service4
+            servicePort: 80

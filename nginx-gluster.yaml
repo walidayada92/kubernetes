@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-skilldna
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: glusterfsvol
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: glusterfsvol
+        glusterfs:
+              endpoints: glusterfs-cluster
+              path: vol01/skilldna
+              readOnly: false
+

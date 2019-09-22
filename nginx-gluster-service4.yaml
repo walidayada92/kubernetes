@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-walid4
+  labels:
+    app: walid4
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: walid4
+  template:
+    metadata:
+      labels:
+        app: walid4
+    spec:
+            # hostNetwork: true
+      containers:
+      - name: nginx
+        image: nginx:1.14.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: glusterfsvol
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: glusterfsvol
+        glusterfs:
+              endpoints: glusterfs-cluster
+              path: vol01/walid4
+              readOnly: false
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: walid-service4
+spec:
+  type: NodePort      
+  selector:
+    app: walid4
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80 
+    targetPort: 80

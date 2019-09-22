@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-walid8
+  annotations:
+          ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: app8.walidtest.com
+    http:
+      paths: 
+      - path: 
+        backend:
+            serviceName: walid-service7
+            servicePort: 80

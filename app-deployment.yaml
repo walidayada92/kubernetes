@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.18.0 (06a2e56)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: app
+  name: app
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: app
+    spec:
+      containers:
+      - env:
+        - name: NODE_ENV
+          value: development
+        - name: PORT
+          value: "80"
+        image: skilldna-ml1:5000/hello-adonis
+        name: adonis-app
+        resources: {}
+      restartPolicy: Always
+status: {}

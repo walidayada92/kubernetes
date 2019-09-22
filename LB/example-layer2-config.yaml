@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: my-ip-space
+      protocol: layer2
+      addresses:
+      - 158.176.87.228
+      - 158.176.87.234
+      - 158.176.87.238
+      - 158.176.87.233
+      - 158.176.87.235
